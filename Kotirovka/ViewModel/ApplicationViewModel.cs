@@ -34,7 +34,9 @@ namespace Kotirovka.ViewModel
             get => this.firstVal;
             set
             {
+                if (value == firstVal) return;
                 this.RaiseAndSetIfChanged(ref firstVal, value);
+                
                 if (firstIndex != null && secondIndex != null )
                 {
                     var f = ((_valutesList[firstIndex].Value * firstVal) / _valutesList[firstIndex].Nominal);
@@ -48,12 +50,13 @@ namespace Kotirovka.ViewModel
             get => this.secondVal;
             set
             {
+                if (value == secondVal)  return;
                 this.RaiseAndSetIfChanged(ref secondVal, value);
                 if (firstIndex != null && secondIndex != null )
                 {
                     var f = ((_valutesList[secondIndex].Value * secondVal) / _valutesList[secondIndex].Nominal);
                     var d = ((_valutesList[firstIndex].Value) / _valutesList[firstIndex].Nominal);
-               // FirstTb = decimal.Round(f / d, 2,MidpointRounding.AwayFromZero);
+                    FirstTb = decimal.Round(f / d, 2,MidpointRounding.AwayFromZero);
                 }
             }
         }
