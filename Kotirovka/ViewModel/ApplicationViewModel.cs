@@ -53,7 +53,7 @@ namespace Kotirovka.ViewModel
                 {
                     var f = ((_valutesList[secondIndex].Value * secondVal) / _valutesList[secondIndex].Nominal);
                     var d = ((_valutesList[firstIndex].Value) / _valutesList[firstIndex].Nominal);
-               //     FirstTb = decimal.Round(f / d, 2,MidpointRounding.AwayFromZero);
+               // FirstTb = decimal.Round(f / d, 2,MidpointRounding.AwayFromZero);
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace Kotirovka.ViewModel
             {
                 var val = ValutesList.Values.FirstOrDefault(p => p.CharCode == SearchText.ToUpper() || p.Name == SearchText);
                 if(val != null)
-                this.ConvertResult = new ConvertResult { Code = val.CharCode, Nominal = val.Nominal, Rubl = val.Value, Usd = usd / val.Value };
+                this.ConvertResult = new ConvertResult { Code = val.CharCode, Nominal = val.Nominal, Rubl = val.Value, Usd =decimal.Round(usd / val.Value,4,MidpointRounding.AwayFromZero) };
             }
             return Observable.Return(Unit.Default);
         }
