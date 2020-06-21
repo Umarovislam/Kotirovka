@@ -23,9 +23,9 @@ namespace Kotirovka.Model
         public string Name { get; set; }
 
         [JsonProperty("Value")]
-        public double Value { get; set; }
+        public decimal Value { get; set; }
 
         [JsonProperty("Previous")]
-        public double Previous { get; set; }
+        public decimal Previous { get; set; }
     }
 }

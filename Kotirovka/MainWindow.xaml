@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kotirovka"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700">
+        Title="Котировка" Height="600" Width="700" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="14" />
@@ -14,7 +15,7 @@
             <Setter Property="FontSize" Value="14" />
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Width" Value="40" />
+            <Setter Property="Width" Value="70" />
             <Setter Property="Margin" Value="5" />
         </Style>
     </Window.Resources>
@@ -26,12 +27,53 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0">
-                
-            </TextBlock>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnRefresh" Command="{Binding LoadAndRefreshCommand}" Grid.Column="0" Content="Обновить" VerticalAlignment="Center"></Button>
+                <Button x:Name="btnLoad" Command="{Binding LoadAndRefreshCommand}" Grid.Column="1" VerticalAlignment="Center">Загрузить</Button>
+            </Grid>
+
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="Коды валют"/>
+                <DataGrid x:Name="GridTable" ItemsSource="{Binding GridTable}">
+
+                </DataGrid>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <TextBox Height="25" Width="150"  Text="{Binding SearchText}" FontSize="15" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0"/>
+                <Button VerticalAlignment="Center" Command="{Binding SearchCommand}" HorizontalAlignment="Right" Height="25" Margin="0 0 100 0">Поиск</Button>
+            </Grid>
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <Grid  Margin="10 0 0 0" >
+                    <TextBlock Text="Курс валют ЦБ на сегодня"/>
+                    <TextBlock Margin="0,30,0,0" Text="{Binding ConvertResult.Code}"/>
+                    <TextBlock Margin="60,30,0,0" Text="{Binding ConvertResult.Nominal}"/>
+                    <TextBlock Margin="0,60,0,0" Text="USD"/>
+                    <TextBlock Margin="60,60,0,0" Text="{Binding ConvertResult.Usd}"/>
+                    <TextBlock Margin="0,90,0,0" Text="RUB"/>
+                    <TextBlock Margin="60,90,0,0" Text="{Binding ConvertResult.Rubl}"/>
+                </Grid>
+                <Grid Margin="10 40 0 0">
+                    <StackPanel  HorizontalAlignment="Left">
+                        <ComboBox Width="100" Height="30" Margin="0 0 0 20"  ItemsSource="{Binding Codes, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding FirstIndex}"/>
+                        <ComboBox Width="100" Height="30"  ItemsSource="{Binding Codes, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SecondIndex}"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBox Height="30" Width="100" Margin="0 0 0 20" Text="{Binding FirstTb, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Height="30" Width="100" Text="{Binding SecondTb, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <Grid Grid.Row="2" Grid.Column="1">
+                <TextBlock Text="{Binding TermResult, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
         </Grid>
     </Border>
 </Window>
